@@ -48,4 +48,10 @@ public class Warehouse {
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("Product with ID " + id + " not found!"));
     }
+
+    public List<Product> getModifiedProduct() {
+        return products.stream()
+                .filter(product -> !product.createdDate().equals(product.modifiedDate()))
+                .collect(Collectors.toList());
+    }
 }

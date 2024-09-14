@@ -25,7 +25,6 @@ public class App {
         warehouse.addProduct(product7);
 
         System.out.println("Product added successfully");
-
         warehouse.getAllProducts();
 
     }
