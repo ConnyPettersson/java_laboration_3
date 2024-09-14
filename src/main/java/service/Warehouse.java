@@ -2,7 +2,6 @@ package service;
 import entities.Category;
 import entities.Product;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -23,11 +22,10 @@ public class Warehouse {
     products.add(product);
     }
 
-    public List<Product> getAllProducts() {
+    public void getAllProducts() {
         for(Product product : products) {
             System.out.println(product);
         }
-        return Collections.unmodifiableList(products);
     }
 
     public List<Product> getProductSortedByName() {

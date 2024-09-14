@@ -3,6 +3,7 @@ import entities.Category;
 import entities.Product;
 import service.Warehouse;
 import java.time.LocalDate;
+import java.util.List;
 
 public class App {
     public static void main(String[] args) {
@@ -26,6 +27,14 @@ public class App {
 
         System.out.println("Product added successfully");
         warehouse.getAllProducts();
+
+        System.out.println("Products sorted by name: ");
+        List<Product> sortedProducts = warehouse.getProductSortedByName();
+
+        for(Product product : sortedProducts) {
+            System.out.println(product);
+        }
+
 
     }
 }
