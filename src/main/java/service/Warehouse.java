@@ -1,6 +1,8 @@
 package service;
 import entities.Category;
 import entities.Product;
+
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
@@ -46,6 +48,12 @@ public class Warehouse {
                 .filter(product -> product.id() == id)
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("Product with ID " + id + " not found!"));
+    }
+
+    public List<Product> getProductsCreatedOn(LocalDate date) {
+        return products.stream()
+                .filter(product -> product.createdDate().equals(date))
+                .collect(Collectors.toList());
     }
 
     public List<Product> getModifiedProduct() {

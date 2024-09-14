@@ -12,9 +12,9 @@ public class App {
         Product product1 = new Product(1, "Zildjan", Category.CYMBALS, 7, LocalDate.now(), LocalDate.now());
         Product product2 = new Product(2, "DW Edge", Category.SNARE_DRUMS, 9, LocalDate.now(), LocalDate.now());
         Product product3 = new Product(3, "Pearl Bass Drum", Category.BASS_DRUMS, 6, LocalDate.now(), LocalDate.now());
-        Product product4 = new Product(4, "Vic Firth", Category.STICKS, 8, LocalDate.now(), LocalDate.now());
-        Product product5 = new Product(5, "Axis", Category.PEDALS, 5, LocalDate.now(), LocalDate.now());
-        Product product6 = new Product(6, "REMO Emperor", Category.DRUM_HEADS, 8, LocalDate.now(), LocalDate.now());
+        Product product4 = new Product(4, "Vic Firth", Category.STICKS, 8, LocalDate.of(2024, 9, 12), LocalDate.of(2024, 9, 14));
+        Product product5 = new Product(5, "Axis", Category.PEDALS, 5, LocalDate.of(2024, 9, 12), LocalDate.of(2024, 9, 14));
+        Product product6 = new Product(6, "REMO Emperor", Category.DRUM_HEADS, 8, LocalDate.of(2024, 9, 12), LocalDate.of(2024, 9, 14));
         Product product7 = new Product(7, "TAMA StarClassic", Category.TOM_TOMS, 6, LocalDate.now(), LocalDate.now());
         Product product8 = new Product(8, "Sabian", Category.CYMBALS, 10, LocalDate.now(), LocalDate.now());
         Product product9 = new Product(9, "Meinl", Category.CYMBALS, 4, LocalDate.now(), LocalDate.now());
@@ -51,5 +51,11 @@ public class App {
         Product product = warehouse.getProductById(1);
         System.out.println(product);
 
+        System.out.println("Get products created 2024-09-14: ");
+        LocalDate date = LocalDate.of(2024, 9, 14);
+        List<Product> productsCreatedToday = warehouse.getProductsCreatedOn(date);
+        for(Product today : productsCreatedToday) {
+            System.out.println(today);
+        }
     }
 }
