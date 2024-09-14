@@ -47,6 +47,9 @@ public class App {
             System.out.println(product);
         }
 
+        System.out.println("Get product with ID 1: ");
+        Product product = warehouse.getProductById(1);
+        System.out.println(product);
 
     }
 }
