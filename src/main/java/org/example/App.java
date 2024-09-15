@@ -59,7 +59,14 @@ public class App {
         }
 
         warehouse.updateProduct(1, "Zildjian K Series", Category.CYMBALS, 9);
-
         warehouse.getAllProducts();
+
+        System.out.println("Products that have been modified: ");
+        List<Product> modifiedProducts = warehouse.getModifiedProduct();
+        for (Product modifiedProduct : modifiedProducts) {
+            System.out.println(modifiedProduct);
+        }
     }
+
+
 }

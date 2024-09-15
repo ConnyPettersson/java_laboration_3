@@ -90,4 +90,18 @@ class WarehouseTest {
         assertEquals(2, cymbals.size(), "Expected 2 products in the CYMBALS category");
     }
 
+    @Test
+    @DisplayName("Retrieve products that have been modified")
+    void getModifiedProduct_withSuccess() {
+        Product product1 = new Product(1, "Zildjian", Category.CYMBALS, 7, LocalDate.now(), LocalDate.now());
+        Product product2 = new Product(2, "Meinl", Category.CYMBALS, 8, LocalDate.of(2024, 9, 14), LocalDate.of(2024, 9, 15)); // Modifierad produkt
+        warehouse.addProduct(product1);
+        warehouse.addProduct(product2);
+
+        List<Product> modifiedProducts = warehouse.getModifiedProduct();
+        assertEquals(1, modifiedProducts.size(), "Expected 1 modified product");
+        assertEquals("Meinl", modifiedProducts.get(0).name(), "Expected 'Meinl' to be the modified product");
+    }
+
+
 }
