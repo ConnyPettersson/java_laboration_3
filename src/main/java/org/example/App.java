@@ -9,7 +9,7 @@ public class App {
     public static void main(String[] args) {
         Warehouse warehouse = new Warehouse();
 
-        Product product1 = new Product(1, "Zildjan", Category.CYMBALS, 7, LocalDate.of(2024, 9, 14), LocalDate.now());
+        Product product1 = new Product(1, "Zildjian", Category.CYMBALS, 7, LocalDate.of(2024, 9, 14), LocalDate.now());
         Product product2 = new Product(2, "DW Edge", Category.SNARE_DRUMS, 9, LocalDate.of(2024, 9, 14), LocalDate.now());
         Product product3 = new Product(3, "Pearl Bass Drum", Category.BASS_DRUMS, 6, LocalDate.now(), LocalDate.now());
         Product product4 = new Product(4, "Vic Firth", Category.STICKS, 8, LocalDate.of(2024, 9, 12), LocalDate.of(2024, 9, 14));
@@ -58,7 +58,7 @@ public class App {
             System.out.println(today);
         }
 
-        warehouse.updateProduct(1, "Zildjan K Series", Category.CYMBALS, 9);
+        warehouse.updateProduct(1, "Zildjian K Series", Category.CYMBALS, 9);
 
         warehouse.getAllProducts();
     }

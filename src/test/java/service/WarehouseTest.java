@@ -22,7 +22,7 @@ class WarehouseTest {
     @Test
     @DisplayName("Add a product successfully to the warehouse")
     void addProduct_withSuccess() {
-        Product product = new Product(1, "Zildjan", Category.CYMBALS, 7, LocalDate.now(), LocalDate.now());
+        Product product = new Product(1, "Zildjian", Category.CYMBALS, 7, LocalDate.now(), LocalDate.now());
         warehouse.addProduct(product);
 
         List<Product> allProducts = warehouse.getProductSortedByName();
@@ -32,7 +32,7 @@ class WarehouseTest {
     @Test
     @DisplayName("Throw exception when adding a product with a duplicate ID")
     void addProduct_thatHasDuplicateId_throwException() {
-        Product product1 = new Product(1, "Zildjan", Category.CYMBALS, 7, LocalDate.now(), LocalDate.now());
+        Product product1 = new Product(1, "Zildjian", Category.CYMBALS, 7, LocalDate.now(), LocalDate.now());
         Product product2 = new Product(1, "Meinl", Category.CYMBALS, 4, LocalDate.now(), LocalDate.now());
         warehouse.addProduct(product1);
 
@@ -48,12 +48,46 @@ class WarehouseTest {
         Product product = new Product(1, "Zildjian", Category.CYMBALS, 7, LocalDate.now(), LocalDate.now());
         warehouse.addProduct(product);
 
-        warehouse.updateProduct(1, "Zildjan K Series", Category.CYMBALS, 9);
+        warehouse.updateProduct(1, "Zildjian K Series", Category.CYMBALS, 9);
 
         Product updatedProduct = warehouse.getProductById(1);
-        assertEquals("Zildjan K Series", updatedProduct.name(), "Expected the product name to be updated");
+        assertEquals("Zildjian K Series", updatedProduct.name(), "Expected the product name to be updated");
         assertEquals(9, updatedProduct.rating(), "Expect the product rating to be updated");
     }
 
+    @Test
+    @DisplayName("Retrieve a product by its ID successfully")
+    void getProductById_success() {
+
+        Product product = new Product(1, "Zildjian", Category.CYMBALS, 7, LocalDate.now(), LocalDate.now());
+        warehouse.addProduct(product);
+
+        Product retrievedProduct = warehouse.getProductById(1);
+        assertNotNull(retrievedProduct, "Expected the product to be found");
+        assertEquals("Zildjian", retrievedProduct.name(), "Expected the product name to match");
+    }
+
+    @Test
+    @DisplayName("Throw exception when retrieving a product by non-existing ID")
+    void getProductById_notFound_throwsException() {
+        Exception exception = assertThrows(IllegalArgumentException.class, () -> {
+            warehouse.getProductById(0);
+        });
+
+        assertTrue(exception.getMessage().contains("Product with ID 0 not found"),
+                "Expected exception message: 'Product with ID 0 not found!'");
+    }
+
+    @Test
+    @DisplayName("Retrieve all products by category successfully")
+    void getProductsByCategory_success() {
+        Product product1 = new Product(1, "Zildjian", Category.CYMBALS, 7, LocalDate.now(), LocalDate.now());
+        Product product2 = new Product(2, "Meinl", Category.CYMBALS, 8, LocalDate.now(), LocalDate.now());
+        warehouse.addProduct(product1);
+        warehouse.addProduct(product2);
+
+        List<Product> cymbals = warehouse.getProductsByCategory(Category.CYMBALS);
+        assertEquals(2, cymbals.size(), "Expected 2 products in the CYMBALS category");
+    }
 
 }
