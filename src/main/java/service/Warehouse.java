@@ -61,4 +61,31 @@ public class Warehouse {
                 .filter(product -> !product.createdDate().equals(product.modifiedDate()))
                 .collect(Collectors.toList());
     }
+
+    public void updateProduct(int id, String newName, Category newCategory, Integer newRating) {
+        for (int i = 0; i < products.size(); i++) {
+            Product p = products.get(i);
+            if (p.id() == id) {
+                String updatedName = (newName != null && !newName.isEmpty()) ? newName : p.name();
+                Category updatedCategory = (newCategory != null) ? newCategory : p.category();
+                int updatedRating = (newRating != null && newRating >= 0 && newRating <= 10) ? newRating : p.rating();
+
+                Product updatedProduct = new Product(
+                        p.id(),
+                        updatedName,
+                        updatedCategory,
+                        updatedRating,
+                        p.createdDate(),
+                        LocalDate.now()
+                );
+
+                products.set(i, updatedProduct);
+                    System.out.println("Product with ID " + id + " updated successfully");
+                    return;
+
+            }
+
+        }
+            throw new IllegalArgumentException("Product with ID " + id + " not found.");
+    }
 }
