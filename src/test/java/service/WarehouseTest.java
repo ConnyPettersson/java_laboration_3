@@ -21,11 +21,24 @@ class WarehouseTest {
     }
     @Test
     @DisplayName("Add a product successfully to the warehouse")
-    void addProduct_success() {
+    void addProduct_withSuccess() {
         Product product = new Product(1, "Zildjan", Category.CYMBALS, 7, LocalDate.now(), LocalDate.now());
         warehouse.addProduct(product);
 
         List<Product> allProducts = warehouse.getProductSortedByName();
         assertEquals(1, allProducts.size(), "Expected 1 product in the warehouse");
+    }
+
+    @Test
+    @DisplayName("Throw exception when adding a product with a duplicate ID")
+    void addProduct_thatHasDuplicateId_throwException() {
+        Product product1 = new Product(1, "Zildjan", Category.CYMBALS, 7, LocalDate.now(), LocalDate.now());
+        Product product2 = new Product(1, "Meinl", Category.CYMBALS, 4, LocalDate.now(), LocalDate.now());
+        warehouse.addProduct(product1);
+
+        Exception exception = assertThrows(IllegalArgumentException.class, () -> {
+            warehouse.addProduct(product2);
+        });
+        assertTrue(exception.getMessage().contains("Product with the same ID already exists"));
     }
 }
