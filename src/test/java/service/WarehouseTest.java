@@ -41,4 +41,19 @@ class WarehouseTest {
         });
         assertTrue(exception.getMessage().contains("Product with the same ID already exists"));
     }
+
+    @Test
+    @DisplayName("Successfully update an existing product in the warehouse")
+    void updateProduct_withSuccess() {
+        Product product = new Product(1, "Zildjian", Category.CYMBALS, 7, LocalDate.now(), LocalDate.now());
+        warehouse.addProduct(product);
+
+        warehouse.updateProduct(1, "Zildjan K Series", Category.CYMBALS, 9);
+
+        Product updatedProduct = warehouse.getProductById(1);
+        assertEquals("Zildjan K Series", updatedProduct.name(), "Expected the product name to be updated");
+        assertEquals(9, updatedProduct.rating(), "Expect the product rating to be updated");
+    }
+
+
 }
