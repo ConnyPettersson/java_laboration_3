@@ -103,5 +103,48 @@ class WarehouseTest {
         assertEquals("Meinl", modifiedProducts.get(0).name(), "Expected 'Meinl' to be the modified product");
     }
 
+    @Test
+    @DisplayName("Throw exception when adding a product with empty name")
+    void tryToAddProductWithEmptyName() {
+        Exception exception = assertThrows(IllegalArgumentException.class, () -> {
+            Product invalidProduct = new Product(1, "", Category.CYMBALS, 7, LocalDate.of(2024, 9, 14), LocalDate.now());
+            warehouse.addProduct(invalidProduct);
+        });
 
+        assertTrue(exception.getMessage().contains("Product name cannot be empty"),
+                "Expected exception message: 'Product name cannot be empty'");
+    }
+
+    @Test
+    @DisplayName("Retrieve products created on a specific date")
+    void getProductsCreatedOn_withSuccess() {
+        Product product1 = new Product(1, "Zildjian", Category.CYMBALS, 7, LocalDate.of(2024, 9, 14), LocalDate.now());
+        Product product2 = new Product(2, "Meinl", Category.CYMBALS, 8, LocalDate.of(2024, 9, 14), LocalDate.now());
+        Product product3 = new Product(3, "DW Edge", Category.SNARE_DRUMS, 9, LocalDate.of(2024, 9, 15), LocalDate.now());
+
+        warehouse.addProduct(product1);
+        warehouse.addProduct(product2);
+        warehouse.addProduct(product3);
+
+        LocalDate dateToCheck = LocalDate.of(2024, 9, 14);
+        List<Product> productsCreatedOnDate = warehouse.getProductsCreatedOn(dateToCheck);
+
+        assertEquals(2, productsCreatedOnDate.size(), "Expected 2 products created on 2024-09-14");
+        assertTrue(productsCreatedOnDate.stream().allMatch(p -> p.createdDate().equals(dateToCheck)),
+                "All products should have the creation date of 2024-09-14");
+    }
+
+    @Test
+    @DisplayName("Return an empty list when no products are created on the given date")
+    void getProductsCreatedOn_withNoResults() {
+        Product product1 = new Product(1, "Zildjian", Category.CYMBALS, 7, LocalDate.of(2024, 9, 14), LocalDate.now());
+        Product product2 = new Product(2, "Meinl", Category.CYMBALS, 8, LocalDate.of(2024, 9, 14), LocalDate.now());
+
+        warehouse.addProduct(product1);
+        warehouse.addProduct(product2);
+
+        LocalDate dateToCheck = LocalDate.of(2024, 9, 13);
+        List<Product> productsCreatedOnDate = warehouse.getProductsCreatedOn(dateToCheck);
+        assertEquals(0, productsCreatedOnDate.size(), "Expected 0 products created on 2024-09-13");
+    }
 }
