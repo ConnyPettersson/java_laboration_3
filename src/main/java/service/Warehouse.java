@@ -6,6 +6,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 public class Warehouse {
@@ -43,11 +44,10 @@ public class Warehouse {
                 .collect(Collectors.toList());
     }
 
-    public Product getProductById(int id) {
+    public Optional<Product> getProductById(int id) {
         return products.stream()
                 .filter(product -> product.id() == id)
-                .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("Product with ID " + id + " not found!"));
+                .findFirst();
     }
 
     public List<Product> getProductsCreatedOn(LocalDate date) {

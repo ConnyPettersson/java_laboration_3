@@ -4,6 +4,7 @@ import entities.Product;
 import service.Warehouse;
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 
 public class App {
     public static void main(String[] args) {
@@ -48,8 +49,14 @@ public class App {
         }
 
         System.out.println("Get product with ID 1: ");
-        Product product = warehouse.getProductById(1);
-        System.out.println(product);
+        Optional<Product> optionalProduct = warehouse.getProductById(1);
+
+        if (optionalProduct.isPresent()) {
+            Product product = optionalProduct.get();
+            System.out.println("Found product: " + product);
+        } else {
+            System.out.println("Product with ID 1 not found");
+        }
 
         System.out.println("Get products created 2024-09-14: ");
         LocalDate date = LocalDate.of(2024, 9, 14);

@@ -8,6 +8,7 @@ import org.junit.jupiter.api.DisplayName;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -50,7 +51,10 @@ class WarehouseTest {
 
         warehouse.updateProduct(1, "Zildjian K Series", Category.CYMBALS, 9);
 
-        Product updatedProduct = warehouse.getProductById(1);
+        Optional<Product> updatedProductOptional = warehouse.getProductById(1);
+        assertTrue(updatedProductOptional.isPresent(), "Expected the updated product to be found");
+
+        Product updatedProduct = updatedProductOptional.get();
         assertEquals("Zildjian K Series", updatedProduct.name(), "Expected the product name to be updated");
         assertEquals(9, updatedProduct.rating(), "Expect the product rating to be updated");
     }
@@ -62,21 +66,20 @@ class WarehouseTest {
         Product product = new Product(1, "Zildjian", Category.CYMBALS, 7, LocalDate.now(), LocalDate.now());
         warehouse.addProduct(product);
 
-        Product retrievedProduct = warehouse.getProductById(1);
-        assertNotNull(retrievedProduct, "Expected the product to be found");
+        Optional<Product> retrievedProductOptional = warehouse.getProductById(1);
+        assertTrue(retrievedProductOptional.isPresent(), "Expected the product to be found");
+
+        Product retrievedProduct = retrievedProductOptional.get();
         assertEquals("Zildjian", retrievedProduct.name(), "Expected the product name to match");
     }
 
     @Test
-    @DisplayName("Throw exception when retrieving a product by non-existing ID")
-    void getProductById_notFound_throwsException() {
-        Exception exception = assertThrows(IllegalArgumentException.class, () -> {
-            warehouse.getProductById(0);
-        });
-
-        assertTrue(exception.getMessage().contains("Product with ID 0 not found"),
-                "Expected exception message: 'Product with ID 0 not found!'");
+    @DisplayName("Return empty Optional when retrieving a product by non-existing ID")
+    void getProductById_notFound_returnsEmptyOptional() {
+        Optional<Product> productOptional = warehouse.getProductById(0);
+        assertTrue(productOptional.isEmpty(), "Expected the result to be an empty Optional");
     }
+
 
     @Test
     @DisplayName("Retrieve all products by category successfully")
